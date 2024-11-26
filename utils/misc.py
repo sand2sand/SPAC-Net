@@ -259,37 +259,3 @@ def random_dropping(pc, e):
 def random_scale(partial, scale_range=[0.8, 1.2]):
     scale = torch.rand(1).cuda() * (scale_range[1] - scale_range[0]) + scale_range[0]
     return partial * scale
-
-
-import open3d as o3d
-
-
-def create_window(pcd, x, y, label):
-    vis = o3d.visualization.Visualizer()
-    vis.create_window(width=800, height=800, visible=True)  # 创建窗口
-    render_option: o3d.visualization.RenderOption = vis.get_render_option()  # 设置点云渲染参数
-    render_option.point_size = 3.0  # 设置渲染点的大小
-    vis.add_geometry(pcd)  # 添加点云
-    ctr = vis.get_view_control()
-    ctr.set_zoom(3.0)
-    ctr.rotate(x, y)
-    vis.run()
-    # vis.capture_screen_image(label, do_render=True)
-    # vis.destroy_window()
-
-def generate_image(point, label1, label2):
-    point = point.reshape(-1, 3)
-    pcd = o3d.geometry.PointCloud()  # 传入3d点云
-    pcd.points = o3d.utility.Vector3dVector(point)  # point3D二维numpy矩阵,将其转换为open3d点云格式
-    # pcd.paint_uniform_color([0.0 / 255.0, 0.0 / 255.0, 0.0 / 255.0])
-    pcd.paint_uniform_color([78.0 / 255.0, 98.0 / 255.0, 171.0 / 255.0])  # Input
-    # pcd.paint_uniform_color([255.0 / 255.0, 153.0 / 255.0, 153.0 / 255.0]) # other methods
-    # pcd.paint_uniform_color([255.0 / 255.0, 153.0 / 255.0, 102.0 / 255.0])  # GT
-    # pcd.paint_uniform_color([102.0 / 255.0, 204.0 / 255.0, 204.0 / 255.0])  # Ours
-    #(78, 98, 171)
-    # (255, 153, 153)
-    # (255, 153, 102)
-    # create_window(pcd, 1140, 180, label1) # airplane
-    create_window(pcd, 1240, 120, label1) # others
-    # create_window(pcd, -190, 240, label1) # car_view1
-    # create_window(pcd, -800, 210, label1) # car_view2
