@@ -30,7 +30,6 @@ class PCN(data.Dataset):
             self.dataset_categories = json.loads(f.read())
             if config.CARS:
                 self.dataset_categories = [dc for dc in self.dataset_categories if dc['taxonomy_id'] == '02958343']
-        self.vis_result = []
 
         self.n_renderings = 8 if self.subset == 'train' else 1
         self.file_list = self._get_file_list(self.subset, self.n_renderings)

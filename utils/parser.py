@@ -6,7 +6,7 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--config',
-        default=r'',
+        default='',
         type = str,
         help = 'yaml config file')
     parser.add_argument(
@@ -29,13 +29,10 @@ def get_args():
         default=False, 
         help='whether to use sync bn')
     # some args
-    import time
-    timestamp = time.strftime('%Y%m%d_%H%M%S', time.localtime())
-    parser.add_argument('--exp_name', type = str, default='20240714', help = 'experiment name')
+    parser.add_argument('--exp_name', type = str, default='exp', help = 'experiment name')
     parser.add_argument('--start_ckpts', type = str, default=None, help = 'reload used ckpt path')
-    parser.add_argument('--ckpts', type = str, default=r'', help = 'test used ckpt path')
-    parser.add_argument('--val_freq', type = int, default=10, help = 'test freq')
-    parser.add_argument('--if_ours', type=bool, default=True, help='test freq')
+    parser.add_argument('--ckpts', type = str, default='', help = 'test used ckpt path')
+    parser.add_argument('--val_freq', type = int, default=1, help = 'test freq')
     parser.add_argument(
         '--resume',
         action='store_true',
@@ -49,7 +46,7 @@ def get_args():
     parser.add_argument(
         '--mode',
         choices=['easy', 'median', 'hard', None],
-        default='median' ,
+        default=None,
         help = 'difficulty mode for shapenet')
     args = parser.parse_args()
 

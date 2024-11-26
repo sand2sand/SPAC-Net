@@ -16,6 +16,8 @@ class ShapeNet(data.Dataset):
         self.subset = config.subset
         self.npoints = config.N_POINTS
         self.data_list_file = os.path.join(self.data_root, f'{self.subset}.txt')
+        self.id2cat = json.load(open('data/ShapeNet55-34/shapenet_synset_dict.json'))
+        print(f'[DATASET] Open file {self.data_list_file}')
         with open(self.data_list_file, 'r') as f:
             lines = f.readlines()
 
@@ -25,12 +27,11 @@ class ShapeNet(data.Dataset):
             line = line.strip()
             taxonomy_id = line.split('-')[0]
             model_id = line.split('-')[1].split('.')[0]
-            if model_id+'\n' in self.vis_result and (self.id2cat[taxonomy_id] in cat_choice or cat_choice[0]=='all'):
-                self.file_list.append({
-                    'taxonomy_id': taxonomy_id,
-                    'model_id': model_id,
-                    'file_path': line
-                })
+            self.file_list.append({
+                'taxonomy_id': taxonomy_id,
+                'model_id': model_id,
+                'file_path': line
+            })
         print(f'[DATASET] {len(self.file_list)} instances were loaded')
 
     def pc_norm(self, pc):
