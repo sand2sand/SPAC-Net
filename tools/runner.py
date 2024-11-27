@@ -143,7 +143,7 @@ def test(base_model, test_dataloader, ChamferDisL1, ChamferDisL2, args, config, 
 
 
     # Print testing results
-    shapenet_dict = json.load(open('/mnt/hdd/share/sand/shapenet_synset_dict.json', 'r'))
+    shapenet_dict = json.load(open('./data/ShapeNet55-34/shapenet_synset_dict.json', 'r'))
     print_log('============================ TEST RESULTS ============================',logger=logger)
     msg = ''
     msg += 'Taxonomy\t'
